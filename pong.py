@@ -14,9 +14,12 @@ Ball = pg.Rect(385,385,15,15)
 
 spiller_poeng = 0 
 spill_font = pg.font.Font("freesansbold.ttf",20)
-pause_button = pg.image.load("pause.png")
+pause_button = pg.image.load("./pause.png")
 
-Pause = pg.transform.scale(pause_button)
+rx = 250
+ry = 150
+
+Pause = pg.transform.scale(pause_button,(rx,ry))
 
 s = 7
 
@@ -52,6 +55,17 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
         
+        if event.type == pg.MOUSEBUTTONDOWN:
+            ra,rb = event.pos
+
+            if Pause.get_rect().collidepoint(ra,rb):
+                Ball.x = 385
+                Ball.y = 385 
+                ball_x = 5
+                ball_y = 5 
+                s = 7
+                spiller_poeng = 0 
+        
     Ball.x += ball_x
     Ball.y += ball_y
 
@@ -61,14 +75,25 @@ while True:
         ball_x *=-1
 
     if Ball.colliderect(Spiller):
+
         ball_y *=-1
         s += 0.8
+        spiller_poeng += 1
+
+    if Ball.y >= 750:
+        ball_y = 0
+        ball_x = 0 
+        s = 0
+        spiller_poeng = 0 
 
     keys = pg.key.get_pressed()
 
     tegn()
     beveg()
     Spiller_grense()
+
+    spiller_text = spill_font.render(f"{spiller_poeng}",False,hvit)
+    VINDU.blit(spiller_text,(385,185))
 
     pg.display.update()
 
