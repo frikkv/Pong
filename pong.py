@@ -1,4 +1,6 @@
 import pygame as pg 
+from random import randint 
+import button 
 
 pg.init()
 
@@ -6,15 +8,22 @@ fps = pg.time.Clock()
 VINDU = pg.display.set_mode((800,800))
 pg.display.set_caption("Pong")
 
+
 svart = (0,0,0)
 hvit = (255,255,255)
 
 Spiller = pg.Rect(375,750,150,10)
-Ball = pg.Rect(385,385,15,15)
+Ball = pg.Rect(randint(0,700),randint(0,300),15,15)
 
 spiller_poeng = 0 
 spill_font = pg.font.Font("freesansbold.ttf",20)
+font = pygame.font.SysFont("arialblack", 40)
 pause_button = pg.image.load("./pause.png")
+
+
+
+
+
 
 rx = 250
 ry = 150
@@ -25,6 +34,7 @@ s = 7
 
 ball_x = 5
 ball_y = 5
+
 
 def tegn():
     fps.tick(60)
@@ -75,8 +85,7 @@ while True:
         ball_x *=-1
 
     if Ball.colliderect(Spiller):
-
-        ball_y *=-1
+        ball_y *=-1.1
         s += 0.8
         spiller_poeng += 1
 
