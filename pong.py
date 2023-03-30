@@ -9,6 +9,7 @@ VINDU = pg.display.set_mode((800,800))
 pg.display.set_caption("Pong")
 
 
+
 svart = (0,0,0)
 hvit = (255,255,255)
 
@@ -17,7 +18,6 @@ Ball = pg.Rect(randint(0,700),randint(0,300),15,15)
 
 spiller_poeng = 0 
 spill_font = pg.font.Font("freesansbold.ttf",20)
-font = pygame.font.SysFont("arialblack", 40)
 pause_button = pg.image.load("./pause.png")
 
 
@@ -25,10 +25,11 @@ pause_button = pg.image.load("./pause.png")
 
 
 
-rx = 250
-ry = 150
+rx = 100
+ry = 50
 
-Pause = pg.transform.scale(pause_button,(rx,ry))
+pause = pg.transform.scale(pause_button,(rx,ry))
+pauserect = pause.get_rect()
 
 s = 7
 
@@ -41,6 +42,7 @@ def tegn():
     VINDU.fill(svart)
     pg.draw.rect(VINDU,hvit,Spiller)
     pg.draw.ellipse(VINDU,hvit,Ball)
+    VINDU.blit(pause,pauserect)
 
 def beveg():
     if keys[pg.K_RIGHT] or keys[pg.K_a]:
@@ -67,14 +69,14 @@ while True:
         
         if event.type == pg.MOUSEBUTTONDOWN:
             ra,rb = event.pos
+            pre_x = ball_x
+            pre_y = ball_y 
 
-            if Pause.get_rect().collidepoint(ra,rb):
-                Ball.x = 385
-                Ball.y = 385 
-                ball_x = 5
-                ball_y = 5 
-                s = 7
-                spiller_poeng = 0 
+            if pause.get_rect().collidepoint(ra,rb):
+                ball_x = 0
+                ball_y = 0
+                
+                
         
     Ball.x += ball_x
     Ball.y += ball_y
